@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 //void	square_pixel_to_image(t_img *img, int x, int y, int color)
 //{

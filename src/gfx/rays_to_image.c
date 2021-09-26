@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 //		ERASE
 void	erase_horizontal_ray_from_image(t_img *img, int x, int y)

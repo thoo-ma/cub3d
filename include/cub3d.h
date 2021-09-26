@@ -22,9 +22,10 @@
 # include <errno.h>		/* errno */
 
 # include "X11/X.h"
-# include "libft.h"
+# include "mlx.h"
 # include "gnl.h"
-# include "../minilibx-linux/mlx.h"
+# include "libft.h"
+//# include "../minilibx-linux/mlx.h"
 
 /******************************************************************************/
 /*						                                                      */

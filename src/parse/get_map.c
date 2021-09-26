@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 //		rename into `append_line` (add '\n')
 void	try_ft_strncat(t_data *data, char **dst, char *src, int n)

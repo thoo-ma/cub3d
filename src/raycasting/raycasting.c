@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 /*		OLD
 int		is_wall_EW(double intersecx, double intersecy, double rayx, char **map)

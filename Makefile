@@ -1,64 +1,62 @@
-OBJS	=	src/libft/elem_index.o \
-			src/libft/ft_isdigit.o \
-			src/libft/ft_atoi.o \
-			src/libft/ft_bzero.o \
-			src/libft/ft_split.o \
-			src/libft/ft_memchr.o \
-			src/libft/ft_memcpy.o \
-			src/libft/ft_memset.o \
-			src/libft/ft_strlen.o \
-			src/libft/ft_strcmp.o \
-			src/libft/ft_strchr.o \
-			src/libft/ft_strcpy.o \
-			src/libft/ft_strdup.o \
-			src/libft/ft_strndup.o \
-			src/libft/ft_strcspn.o \
-			src/libft/ft_strpbrk.o \
-			src/libft/ft_strptrlen.o \
-			src/utils/is_wall.o \
-			src/utils/print_data.o \
-			src/utils/skip_spaces.o \
-			src/utils/skip_digits.o \
-			src/utils/arrondi.o \
-			src/utils/rotate.o \
-			src/parse/parse.o \
-			src/parse/get_map.o \
-			src/parse/get_game_data.o \
-			src/parse/square_map.o \
-			src/parse/check_map.o \
-			src/gnl/gnl.o \
-			src/gfx/pixel_to_image.o \
-			src/gfx/square_pixel_to_image.o \
-			src/gfx/map_to_image.o \
-			src/gfx/rays_to_image.o \
-			src/events/key_hook.o \
-			src/events/define_hooks.o \
-			src/events/do_nothing.o \
-			src/raycasting/new_raycasting.o \
-			src/utils/init_cub3d.o \
-			src/utils/exit_cub3d.o \
-			src/utils/array.o
-
 CC		=	gcc
 
-FLAGS	=	-Wall -Wextra -Wdouble-promotion -Wfloat-conversion #-fsanitize=address
+FLAGS		=	-Wall -Wextra -Wdouble-promotion -Wfloat-conversion #-fsanitize=address
 
-#INCLUDE	=	-I minilibx-linux/mlx.h
+LIBFT_DIR	= 	src/libft/
 
-%.o:		%.c
+LIBFT		= 	$(LIBFT_DIR)libft.a
+
+SRCS		=	src/utils/is_wall.c \
+			src/utils/print_data.c \
+			src/utils/skip_spaces.c \
+			src/utils/skip_digits.c \
+			src/utils/arrondi.c \
+			src/utils/rotate.c \
+			src/parse/parse.c \
+			src/parse/get_map.c \
+			src/parse/get_game_data.c \
+			src/parse/square_map.c \
+			src/parse/check_map.c \
+			src/gnl/gnl.c \
+			src/gfx/pixel_to_image.c \
+			src/gfx/square_pixel_to_image.c \
+			src/gfx/map_to_image.c \
+			src/gfx/rays_to_image.c \
+			src/events/key_hook.c \
+			src/events/define_hooks.c \
+			src/events/do_nothing.c \
+			src/raycasting/new_raycasting.c \
+			src/utils/init_cub3d.c \
+			src/utils/exit_cub3d.c \
+			src/utils/array.c \
+			src/main.c
+
+INCLUDE		=	-I minilibx-linux \
+			-I src/libft \
+			-I include
+
+NAME		=	cub3d
+
+%.o:			%.c
 			$(CC) $(FLAGS) -c $< -o $@
 
-#all:		$(OBJS)
-#			$(CC) $(FLAGS) $(OBJS) main.c
+all:			$(NAME)
 
-all:		$(OBJS)
-			$(CC) $(FLAGS) $(INCLUDE) -o main.o -c main.c
-			$(CC) $(FLAGS) $(INCLUDE) -o a.out $(OBJS) main.o -Lminilibx-linux -lmlx -lXext -lX11 -lm
+$(NAME):		$(LIBFT) $(SRCS)
+			@echo Compilng cub3d...
+			@$(CC) $(FLAGS) $(INCLUDE) -o $(NAME) $(SRCS) $(LIBFT) -Lminilibx-linux -lmlx -lXext -lX11 -lm
+
+$(LIBFT):
+			@echo Building libft...
+			@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 
 clean:
-			rm -rf $(OBJS) main.o
+			@echo Cleaning objects...
+			@$(MAKE) --no-print-directory clean -C $(LIBFT_DIR)
 
-fclean:		clean
-			rm -rf a.out
+fclean:
+			@echo Cleaning binaries...
+			@$(MAKE) --no-print-directory fclean -C $(LIBFT_DIR)
+			@rm -f $(NAME)
 
 re:			fclean all
