@@ -60,5 +60,5 @@ void	get_map(t_data *data, int fd, char **line)
 	safe_free((void *)line);
 	if (!data->map)
 		exit_cub3d(data, MAP_FT_SPLIT);
-	print_2d_array(data->map);
+//	print_2d_array(data->map);
 }

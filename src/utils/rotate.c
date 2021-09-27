@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-double		rotate(double ray, double angle)
+double	rotate(double ray, double angle)
 {
 	double ret;
 
@@ -22,4 +22,21 @@ double		rotate(double ray, double angle)
 	while (ret < 0)
 		ret += 2 * M_PI;
 	return (ret);
+}
+
+void	new_rotate(double *ray, double angle)
+{
+	*ray += angle;
+	while (*ray >= 2 * M_PI)
+		*ray -= 2 * M_PI;
+	while (*ray < 0)
+		*ray += 2 * M_PI;
+}
+
+void	rotate_player(t_player *player, double angle)
+{
+	//player->dir = rotate(player->dir, angle);
+	//player->plane = rotate(player->plane, angle);
+	new_rotate(&player->dir, angle);
+	new_rotate(&player->plane, angle);
 }

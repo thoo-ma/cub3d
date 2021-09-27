@@ -12,35 +12,6 @@
 
 #include "cub3d.h"
 
-//				GET_STEP
-t_int_vector	get_step(double ray)
-{
-	t_int_vector step;
-
-	if (ray < 0.5 * M_PI)
-	{
-		step.x = 1;
-		step.y = 1;
-	}
-	else if (ray < M_PI)
-	{
-		step.x = -1;
-		step.y = 1;
-	}
-	else if (ray < 1.5 * M_PI)
-	{
-		step.x = -1;
-		step.y = -1;
-	}
-	else
-	{
-		step.x = 1;
-		step.y = -1;
-	}
-	return (step);
-}
-
-//				GET_ANGLE
 t_double_vector		get_angle(double ray)
 {
 	double		i;
@@ -56,7 +27,7 @@ t_double_vector		get_angle(double ray)
 	return (angle);
 }
 
-//				INIT_DIST
+//			INIT_DIST
 /*
 double			init_dist_ns(t_double_vector pos, double angle, double stepx, t_data *data)
 {
@@ -169,7 +140,7 @@ t_double_vector		old_init_dist(t_double_vector pos, double ray)
 	return (dist);
 }
 
-//				GET_DELTA_DIST
+//			GET_DELTA_DIST
 /*
 double			get_delta_dist_ns(double angle, t_int_vector step)
 {
@@ -226,7 +197,34 @@ double			get_delta_dist_e(double angle, double stepy)
 }
 */
 
-t_double_vector		get_delta_dist(double ray)
+t_int_vector	get_step(double ray)
+{
+	t_int_vector step;
+
+	if (ray < 0.5 * M_PI)
+	{
+		step.x = 1;
+		step.y = 1;
+	}
+	else if (ray < M_PI)
+	{
+		step.x = -1;
+		step.y = 1;
+	}
+	else if (ray < 1.5 * M_PI)
+	{
+		step.x = -1;
+		step.y = -1;
+	}
+	else
+	{
+		step.x = 1;
+		step.y = -1;
+	}
+	return (step);
+}
+
+t_double_vector	get_delta_dist(double ray)
 {
 	t_double_vector delta_dist;
 
@@ -280,10 +278,10 @@ t_double_vector	init_dist(t_double_vector pos, t_int_vector map, double ray)
 		dist.y = ((map.y + 1) * SQUARE_LENGTH - pos.y) / cos(ray - 0.5 * M_PI);
 
 		// ON A : dist_ew = delta_x / cos(angle);
-		// OR   : delta_x = (map.x + 1) * SQUARE_LENGTH - pos.x;
+		// OR   : delta_x = (pos.x - map.x) * SQUARE_LENGTH;
 		// ET   : angle   = M_PI - ray;
-		// D'OU : dist_ew = ((map.x + 1) * SQUARE_LENGTH) / cos(M_PI - ray);
-		dist.x = ((map.x + 1) * SQUARE_LENGTH) / cos(M_PI - ray);
+		// D'OU : dist_ew = ((pos.x - map.x) * SQUARE_LENGTH) / cos(M_PI - ray);
+		dist.x = ((pos.x - map.x) * SQUARE_LENGTH) / cos(M_PI - ray);
 	}
 	else if (ray < 1.5 * M_PI) // NORTH/WEST
 	{
@@ -317,48 +315,85 @@ t_double_vector	init_dist(t_double_vector pos, t_int_vector map, double ray)
 	return (dist);
 }
 
-void			dda(t_data *data, double ray)
+double	get_wall_dist(t_double_vector dist, double ray)
 {
-	t_double_vector		dist;
-	t_double_vector		delta_dist;
-	t_int_vector		step;
-	t_int_vector		cell;
+	double angle;
+
+	// on a : cos(a) = adjacent / hypothenuse
+	// i.e. : hypothenuse = adjacent / cos(a)
+	if (dist.x < dist.y)
+	{
+		if (ray < 0.5 * M_PI)
+			angle = ray;
+		else if (ray < M_PI)
+			angle = M_PI - ray;
+		else if (ray < 1.5 * M_PI)
+			angle = ray - M_PI;
+		else
+			angle = 2 * M_PI - ray;
+		// adjacent = dist.x
+		return (dist.x / cos(angle));
+	}
+	else
+	{
+		if (ray < 0.5 * M_PI)
+			angle = 0.5 * M_PI - ray;
+		else if (ray < M_PI)
+			angle = ray - 0.5 * M_PI;
+		else if (ray < 1.5 * M_PI)
+			angle = 1.5 * M_PI - ray;
+		else
+			angle = ray - 1.5 * M_PI;
+		// adjacent = dist.y
+		return (dist.y / cos(angle));
+	}
+}
+
+void	dda(t_data *data, double ray)
+{
+	t_double_vector	dist;
+	t_double_vector	delta_dist;
+	t_int_vector	step;
+	t_int_vector	cell;
 	
 	dist = init_dist(data->player.pos, data->player.map, ray);
-	//printf("init_dist: [%f;%f]\n", dist.x, dist.y);
+	printf("init_dist: [%f;%f]\n", dist.x, dist.y);
 
 	delta_dist = get_delta_dist(ray);
 	printf("delta_dist: [%f;%f]\n", delta_dist.x, delta_dist.y);
 
 	step = get_step(ray);
-	//printf("step: [%d;%d]\n", step.x, step.y);
+	printf("step: [%d;%d]\n", step.x, step.y);
 
 	cell = data->player.map;
-
-	//int side;
+	//int side; // 0 == EW, 1 == NS
 	while (1)
 	{
 		printf("dist: [%f;%f]\n", dist.x, dist.y);
 		printf("cell: [%d;%d]\n", cell.x, cell.y);
-		if (dist.x < dist.y)
+		if (dist.x < dist.y) // which wall ray will encounter next ?
 		{
-			dist.x += delta_dist.x;
+			// ray now encounter a EW wall
 			cell.x += step.x;
+			if (data->map[cell.y][cell.x] != '1')
+				dist.x += delta_dist.x;
+			else
+				break ;
 		//	side = 0;
 		}
 		else
 		{
-			dist.y += delta_dist.y;
+			// ray now encounter a NS wall
 			cell.y += step.y;
+			if (data->map[cell.y][cell.x] != '1')
+				dist.y += delta_dist.y;
+			else
+				break ;
 		//	side = 1;
 		}
-		//if (data->map[cell.y][cell.x] > '0')
-		if (data->map[cell.y][cell.x] == '1')
-			break ;
 	}
 	printf("wall encountered in [%d;%d]\n", cell.x, cell.y);
-	printf("final_dist: [%f;%f]\n", dist.x, dist.y);
-	// get_wall_size(dist);
+	printf("final dist : %f\n", get_wall_dist(dist, ray));
 }
 
 void	raycasting(t_data *data)

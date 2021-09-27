@@ -13,13 +13,13 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <fcntl.h>		/* open, read */
-# include <stdio.h>		/* printf, perror */
+# include <fcntl.h>	/* open, read */
+# include <stdio.h>	/* printf, perror */
 # include <unistd.h>	/* close */
 # include <stdlib.h>	/* malloc */
 # include <string.h>	/* strerror */
-# include <math.h>		/* cos, sin, PI */
-# include <errno.h>		/* errno */
+# include <math.h>	/* cos, sin, PI */
+# include <errno.h>	/* errno */
 
 # include "X11/X.h"
 # include "mlx.h"
@@ -28,7 +28,7 @@
 
 /******************************************************************************/
 /*						                              */
-/*			keycodes                                              */
+/*		keycodes                                                      */
 /*						                              */
 /******************************************************************************/
 
@@ -43,26 +43,26 @@
 
 /******************************************************************************/
 /*						                              */
-/*			colors                                                */
+/*		colors                                                        */
 /*						                              */
 /******************************************************************************/
 
-# define RED			0x00FF0000
-# define BLUE			0x000000FF
-# define GREEN			0x0000FF00
-# define WHITE			0x00F0F0F0
-# define BLACK			0x000F0F0F
+# define RED	0x00FF0000
+# define BLUE	0x000000FF
+# define GREEN	0x0000FF00
+# define WHITE	0x00F0F0F0
+# define BLACK	0x000F0F0F
 
-# define N_COLOR		RED
-# define S_COLOR		BLUE
-# define E_COLOR		GREEN
-# define W_COLOR		WHITE
-# define SKY_COLOR		BLACK
+# define N_COLOR	RED
+# define S_COLOR	BLUE
+# define E_COLOR	GREEN
+# define W_COLOR	WHITE
+# define SKY_COLOR	BLACK
 # define FLOOR_COLOR	BLACK
 
 /******************************************************************************/
 /*						                              */
-/*			other                                                 */
+/*		other                                                         */
 /*						                              */
 /******************************************************************************/
 
@@ -74,31 +74,32 @@
 
 # define SQUARE_LENGTH 1 // 16
 
-# define CARDINALS		"NSEW"
-# define BASE_DEC		"0123456789"
+# define ROTATION_UNIT M_PI / 4
+# define MOVEMENT_UNIT SQUARE_LENGTH / 4
 
-# define CUB_LENGTH		1.0 // will be obsolete
+# define CARDINALS "NSEW"
+# define BASE_DEC "0123456789"
+
+# define CUB_LENGTH 1.0 // will be obsolete
 
 // bug if above SQUARE_LENGTH
 // to avoid this, check for walls at every next square,
 // not only for the square at MOVEMENT_UNIT distance from player
-# define MOVEMENT_UNIT	8 // i.e SQUARE_LENGTH / 2
+//# define MOVEMENT_UNIT	8 // i.e SQUARE_LENGTH / 2
 
 //# define SQUARE_UNIT		1 / SQUARE_LENGTH
 //# define MOVEMENT_UNIT	1 * SQUARE_UNIT
 //# define PLAYER_HEIGHT	SQUARE_LENGTH / 2
 
-# define ROTATION_UNIT	(M_PI / 2)
-
 # ifndef M_PI
-	#define M_PI		3.14159265358979323846
+ #define M_PI 3.14159265358979323846
 # endif
 
 typedef int		t_bool; // remove
 
 /******************************************************************************/
 /*						                              */
-/*			errors / exit values                                  */
+/*		errors / exit values                                          */
 /*						                              */
 /******************************************************************************/
 
@@ -138,7 +139,7 @@ typedef enum e_errno
 
 /******************************************************************************/
 /*						                              */
-/*			2D vectors                                            */
+/*		2D vectors                                                    */
 /*						                              */
 /******************************************************************************/
 
@@ -162,7 +163,7 @@ typedef	struct	s_double_vector
 
 /******************************************************************************/
 /*						                              */
-/*			pixel representation                                  */
+/*		pixel representation                                          */
 /*						                              */
 /******************************************************************************/
 
@@ -176,7 +177,7 @@ typedef struct	s_color
 
 /******************************************************************************/
 /*						                              */
-/*			all pixel colors cub3d uses                           */
+/*		all pixel colors cub3d uses                                   */
 /*						                              */
 /******************************************************************************/
 
@@ -217,21 +218,21 @@ typedef struct s_images
 
 /******************************************************************************/
 /*						                              */
-/*			player                                                */
+/*		player                                                        */
 /*						                              */
 /******************************************************************************/
 
 typedef struct	s_player
 {
-	double				dir;
-	double				plane;
-	t_int_vector		map;
-	t_double_vector		pos;
-}				t_player;
+	double		dir;
+	double		plane;
+	t_int_vector	map;
+	t_double_vector	pos;
+}			t_player;
 
 /******************************************************************************/
 /*						                              */
-/*			data                                                  */
+/*		data                                                          */
 /*						                              */
 /******************************************************************************/
 
@@ -244,7 +245,7 @@ typedef	struct	s_data
 	t_images	images;
 	t_colors	colors;
 	t_player	player;
-}				t_data;
+}			t_data;
 
 /******************************************************************************/
 /*                                                                            */
@@ -303,7 +304,6 @@ void			skip_spaces(char **s);
 void			skip_digits(char **s);
 int			is_wall(char **map, int x, int y);
 double			arrondi(double z);
-double			rotate(double ray, double angle);
 
 /*			array.c				*/
 int			length_2d_array(char **a);
@@ -321,6 +321,10 @@ void			init_my_strerror(const char **my_strerror);
 /*			exit_cub3d.c			*/
 void			destroy_cub3d(t_data *data);
 void			exit_cub3d(t_data *data, int my_errno);
+
+/*			rotate.c			*/
+double			rotate(double ray, double angle);
+void			rotate_player(t_player *player, double angle);
 
 /******************************************************************************/
 /*                                                                            */

@@ -43,7 +43,7 @@ NAME		=	cub3d
 all:			$(NAME)
 
 $(NAME):		$(LIBFT) $(SRCS)
-			@echo Compilng cub3d...
+			@echo Compiling cub3d...
 			@$(CC) $(FLAGS) $(INCLUDE) -o $(NAME) $(SRCS) $(LIBFT) -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 $(LIBFT):

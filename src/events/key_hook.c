@@ -12,207 +12,7 @@
 
 #include "cub3d.h"
 
-/*		OLD
-void	forward(t_data *data)
-{
-	double *dirx = &data->game.dir->x;
-	double *diry = &data->game.dir->y;
-
-	double *posx = &data->game.pos->x;
-	double *posy = &data->game.pos->y;
-
-	double old_posx = *posx;
-	double old_posy = *posy;
-
-	if ((int)*dirx > 0 && !is_wall(data->game.map, (int)(*posx + 1), (int)*posy))
-		//(*posx)++;
-		(*posx) += MOVEMENT_UNIT;
-	else if ((int)*dirx < 0 && !is_wall(data->game.map, (int)(*posx - 1), (int)*posy))
-		//(*posx)--;
-		(*posx) -= MOVEMENT_UNIT;
-	else if ((int)*diry > 0 && !is_wall(data->game.map, (int)*posx, (int)(*posy + 1)))
-		//(*posy)++;
-		(*posy) += MOVEMENT_UNIT;
-	else if ((int)*diry < 0 && !is_wall(data->game.map, (int)*posx, (int)(*posy - 1)))
-		//(*posy)--;
-		(*posy) -= MOVEMENT_UNIT;
-	if (old_posx != *posx || old_posy != *posy)
-	//if (trunc(old_posx) != trunc(*posx) || trunc(old_posy) != trunc(*posy))
-	{
-		square_pixel_to_image(&data->mlx.img,
-			(int)(trunc(*posx) * SQUARE_LENGTH),
-			(int)(trunc(*posy) * SQUARE_LENGTH), BLUE);
-		square_pixel_to_image(&data->mlx.img,
-			(int)(trunc(old_posx) * SQUARE_LENGTH),
-			(int)(trunc(old_posy) * SQUARE_LENGTH), GREEN);
-	}
-}
-
-void	backward(t_data *data)
-{
-	double *dirx = &data->game.dir->x;
-	double *diry = &data->game.dir->y;
-
-	double *posx = &data->game.pos->x;
-	double *posy = &data->game.pos->y;
-
-	double old_posx = *posx;
-	double old_posy = *posy;
-
-	if ((int)*dirx > 0 && !is_wall(data->game.map, (int)(*posx - 1), (int)*posy))
-		//(*posx)--;
-		(*posx) -= MOVEMENT_UNIT;
-	else if ((int)*dirx < 0 && !is_wall(data->game.map, (int)(*posx + 1), (int)*posy))
-		//(*posx)++;
-		(*posx) += MOVEMENT_UNIT;
-	else if ((int)*diry > 0 && !is_wall(data->game.map, (int)*posx, (int)(*posy - 1)))
-		//(*posy)--;
-		(*posy) -= MOVEMENT_UNIT;
-	else if ((int)*diry < 0 && !is_wall(data->game.map, (int)*posx, (int)(*posy + 1)))
-		//(*posy)++;
-		(*posy) += MOVEMENT_UNIT;
-
-	//if (old_posx != *posx || old_posy != *posy)
-	if (trunc(old_posx) != trunc(*posx) || trunc(old_posy) != trunc(*posy))
-	{
-		square_pixel_to_image(&data->mlx.img,
-			(int)(*posx * SQUARE_LENGTH), (int)(*posy * SQUARE_LENGTH), BLUE);
-		square_pixel_to_image(&data->mlx.img,
-			(int)(old_posx * SQUARE_LENGTH), (int)(old_posy * SQUARE_LENGTH), GREEN);
-	}
-}
-
-void	left_rotate(t_data *data)
-{
-	double old_dir_x;
-	double old_dir_y;
-	double old_plane_x;
-	double old_plane_y;
-
-	double new_dir_x;
-	double new_dir_y;
-	double new_plane_x;
-	double new_plane_y;
-
-	//double angle = 270 * M_PI / 180;
-	double angle = (360.0 - ROTATION_UNIT) * M_PI / 180.0;
-
-	// same assignation
-	old_dir_x = data->game.dir->x;
-	old_dir_y = data->game.dir->y;
-
-	// same assignation
-	old_plane_x = data->game.plane->x;
-	old_plane_y = data->game.plane->y;
-
-	// same calcul
-	new_dir_x = old_dir_x * cos(angle) - old_dir_y * sin(angle);
-	new_dir_y = old_dir_x * sin(angle) + old_dir_y * cos(angle);
-
-	// same calcul
-	new_plane_x = old_plane_x * cos(angle) - old_plane_y * sin(angle);
-	new_plane_y = old_plane_x * sin(angle) + old_plane_y * cos(angle);
-
-	// same assignation bis
-	data->game.dir->x = new_dir_x;
-	data->game.dir->y = new_dir_y;
-
-	// same assignation bis
-	data->game.plane->x = new_plane_x;
-	data->game.plane->y = new_plane_y;
-}
-
-void	right_rotate(t_data *data)
-{
-	double old_dir_x;
-	double old_dir_y;
-	double old_plane_x;
-	double old_plane_y;
-
-	double new_dir_x;
-	double new_dir_y;
-	double new_plane_x;
-	double new_plane_y;
-
-	//double angle = 90 * M_PI / 180;
-	double angle = ROTATION_UNIT * M_PI / 180.0;
-
-	// same assignation
-	old_dir_x = data->game.dir->x;
-	old_dir_y = data->game.dir->y;
-
-	// same assignation
-	old_plane_x = data->game.plane->x;
-	old_plane_y = data->game.plane->y;
-
-	// same calcul --> gotta use rotate(vector, angle)
-	new_dir_x = old_dir_x * cos(angle) - old_dir_y * sin(angle);
-	new_dir_y = old_dir_x * sin(angle) + old_dir_y * cos(angle);
-
-	// same calcul
-	new_plane_x = old_plane_x * cos(angle) - old_plane_y * sin(angle);
-	new_plane_y = old_plane_x * sin(angle) + old_plane_y * cos(angle);
-
-	// same assignation bis
-	data->game.dir->x = new_dir_x;
-	data->game.dir->y = new_dir_y;
-
-	// same assignation bis
-	data->game.plane->x = new_plane_x;
-	data->game.plane->y = new_plane_y;
-}
-
-int		key_hook(int key, t_data *data)
-{
-	printf("key: %d\n", key);
-
-	// exit
-	if (key == ESC)
-		mlx_loop_end(data->mlx.mlx);
-
-	// moove
-	else if (key == W)
-		forward(data);
-	else if (key == S)
-		backward(data);
-	else if (key == A)
-	{
-//		erase_rays_from_image(&data->mlx.img,
-//			&data->game.pos->x, &data->game.pos->y,
-//			&data->game.dir->x, &data->game.dir->y, data->game.map);
-		left_rotate(data);
-	}
-	else if (key == D)
-	{
-//		erase_rays_from_image(&data->mlx.img,
-//			&data->game.pos->x, &data->game.pos->y,
-//			&data->game.dir->x, &data->game.dir->y, data->game.map);
-		right_rotate(data);
-	}
-
-	if (key == W || key == S || key == A || key == D)
-	{
-		print_game_data(&data->game);
-//		raycasting(data);
-//		rays_to_image(&data->mlx.img,
-//			&data->game.pos->x, &data->game.pos->y,
-//			&data->game.dir->x, &data->game.dir->y, data->game.map);
-		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img.img,
-			0, 0);
-	}
-
-	if (key == Z)
-	{
-		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img.img,
-		0, 0);
-	}
-
-	return (1);
-}
-*/
-
 /*
-//		NEW
 void	forward(t_data *data)
 {
 	double dir = data->game.dir;
@@ -278,83 +78,100 @@ void	backward(t_data *data)
 		pixel_to_image(&data->mlx.img, (int)*posy, (int)*posx, BLUE);
 	}
 }
-
-//		remplacer par rotate() ? --> cf. src/verify/is_cardinal_valid.c
-void	left_rotate(t_data *data)
-{
-	double *dir = &data->game.dir;
-
-	// 4 directions : ROTATION_UNIT = 90
-	if (*dir == 0)
-		*dir = 3 * M_PI / 2;
-	else if (*dir == M_PI / 2)
-		*dir = 0;
-	else if (*dir == M_PI)
-		*dir = M_PI / 2;
-	else if (*dir == 3 * M_PI / 2)
-		*dir = M_PI;
-
-	// All directions
-//	if (dir < ROTATION_UNIT)
-//		dir = 2 * M_PI - ROTATION_UNIT + dir;
-//	else
-//		dir -= ROTATION_UNIT;
-}
-
-//		remplacer par rotate() ? --> cf. src/verify/is_cardinal_valid.c
-void	right_rotate(t_data *data)
-{
-	double *dir = &data->game.dir;
-
-	// 4 directions : ROTATION_UNIT = 90
-	if (*dir == 0)
-		*dir = M_PI / 2;
-	else if (*dir == M_PI / 2)
-		*dir = M_PI;
-	else if (*dir == M_PI)
-		*dir = 3 * M_PI / 2;
-	else if (*dir == 3 * M_PI / 2)
-		*dir = 0;
-
-	// All directions
-	//if (*dir > 2 * M_PI - ROTATION_UNIT)
-	//	*dir = *dir + ROTATION_UNIT - 2 * M_PI;
-	//else
-	//	*dir += ROTATION_UNIT;
-}
 */
 
-int		key_hook(int key, t_data *data)
+t_double_vector	get_delta(t_player *player)
+{
+	t_double_vector	delta;
+
+	if (player->dir < 0.5 * M_PI) // SOUTH/WEST
+	{
+		// on a : cos(dir) = delta.x / MOVEMENT_UNIT
+		// i.e. : delta.x = cos(dir) * MOVEMENT_UNIT
+		delta.x = cos(player->dir) * MOVEMENT_UNIT;
+		// on a : cos(0.5 * M_PI - dir) = delta.y / MOVEMENT_UNIT
+		// i.e. : delta.y = cos(0.5 * M_PI - dir) * MOVEMENT_UNIT
+		delta.y = cos(0.5 * M_PI - player->dir) * MOVEMENT_UNIT;
+	}
+	else if (player->dir < M_PI) // SOUTH/WEST
+	{
+		// on a : cos(M_PI - dir) = delta.x / MOVEMENT_UNIT
+		// i.e. : delta.x = cos(M_PI - dir) * MOVEMENT_UNIT
+		delta.x = cos(M_PI - player->dir) * MOVEMENT_UNIT;
+		// on a : cos(dir - 0.5 * M_PI) = delta.y / MOVEMENT_UNIT
+		// i.e. : delta.y = cos(dir - 0.5 * M_PI) * MOVEMENT_UNIT
+		delta.y = cos(player->dir - 0.5 * M_PI) * MOVEMENT_UNIT;
+	}
+	else if (player->dir < 1.5 * M_PI) // NORTH/WEST
+	{
+		// on a : cos(dir - 0.5 * M_PI) = delta.x / MOVEMENT_UNIT
+		// i.e. : delta.x = cos(dir - 0.5 * M_PI) * MOVEMENT_UNIT
+		delta.x = cos(player->dir - 0.5 * M_PI) * MOVEMENT_UNIT;
+		// on a : cos(1.5 * M_PI - dir) = delta.y / MOVEMENT_UNIT
+		// i.e. : delta.y = cos(1.5 * M_PI - dir) * MOVEMENT_UNIT
+		delta.y = cos(1.5 * M_PI - player->dir) * MOVEMENT_UNIT;
+	}
+	else
+	{
+		// on a : cos(2 * M_PI - dir) = delta.x / MOVEMENT_UNIT
+		// i.e. : delta.x = cos(2 * M_PI - dir) * MOVEMENT_UNIT
+		delta.x = cos(2 * M_PI - player->dir) * MOVEMENT_UNIT;
+		// on a : cos(dir - 1.5 * M_PI) = delta.y / MOVEMENT_UNIT
+		// i.e. : delta.y = cos(dir - 1.5 * M_PI) * MOVEMENT_UNIT
+		delta.y = cos(player->dir - 1.5 * M_PI) * MOVEMENT_UNIT;
+	}
+//	player->map.x = (int)player->pos.x;
+//	player->map.y = (int)player->pos.y;
+	return (delta);
+}
+
+void	forward(t_data *data)
+{
+	t_double_vector delta;
+       
+	delta = get_delta(&data->player);
+	printf("DELTA: [%f, %f]\n", delta.x, delta.y);
+	printf("POS  : [%f, %f]\n", data->player.pos.x, data->player.pos.y);
+
+	if (data->map[(int)(data->player.pos.x + delta.x)][(int)(data->player.pos.y + delta.y)] != '1')
+	{
+		printf("yo\n");
+		data->player.pos.x += delta.x;
+		data->player.pos.y += delta.y;
+		data->player.map.x = (int)data->player.pos.x;
+		data->player.map.y = (int)data->player.pos.y;
+	}
+}
+
+int	key_hook(int key, t_data *data)
 {
 	printf("key: %d\n", key);
-
-	// exit
 	if (key == ESC)
 		mlx_loop_end(data->mlx_ptr);
-
-	// moove
-//	else if (key == W)
-//		forward(data);
+	else if (key == W)
+		forward(data);
 //	else if (key == S)
 //		backward(data);
 //	else if (key == A)
-//		left_rotate(data);
+//		left(data);
 //	else if (key == D)
-//		right_rotate(data);
-
+//		right(data);
 	// update image
 //	if (key == W || key == S || key == A || key == D)
 //	{
 //		print_game_data(&data->game);
 //		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img.img, 0, 0);
 //	}
-	
-	if (key == Z)
+	else if (key == RIGHT)
+		rotate_player(&data->player, (double)ROTATION_UNIT);
+	else if (key == LEFT)
+		rotate_player(&data->player, (double)(ROTATION_UNIT * (-1)));
+	else if (key == Z)
 	{
+		print_2d_array(data->map);
 		print_player_data(&data->player);
 		raycasting(data);
 	//	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img.img, 0, 0);
 	}
-
 	return (1);
 }
