@@ -20,8 +20,8 @@
 
 # define BUFFER_SIZE	8
 
-int		ft_strncat(char **dest, char *src, int n);
-int		temp_to_line(char **line, char *temp, char *buffer, int lf);
-int		get_next_line(int fd, char **line);
+int	ft_strncat(char **dest, char *src, int n);
+int	temp_to_line(char **line, char *temp, char *buffer, int lf);
+int	get_next_line(int fd, char **line);
 
 #endif
