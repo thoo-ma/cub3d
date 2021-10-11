@@ -6,36 +6,33 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 13:40:14 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/23 13:57:10 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/11 17:04:41 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_texture(t_data *data, t_img *img, char *line)
+static void	get_texture(t_data *data, t_image *image, char *line)
 {
 	int		x;
 	int		y;
 
-	if (img->img)
+	if (image->img)
 		exit_cub3d(data, XPM_DUPLICATE);
-
 	if (*line != ' ')
 		exit_cub3d(data, XPM_FORMAT);
 	skip_spaces(&line);
-
-	img->img = mlx_xpm_file_to_image(data->mlx_ptr, line, &x, &y);
-	if (img->img == 0)
+	image->img = mlx_xpm_file_to_image(data->mlx, line, &x, &y);
+	if (image->img == 0)
 		exit_cub3d(data, XPM_UNAVAILABLE);
-
-	img->addr = 0;
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->ll, &img->endian);
-	if (img->addr == 0)
+	image->addr = 0;
+	image->addr = (int *)mlx_get_data_addr(
+			image->img, &image->bpp, &image->ll, &image->endian);
+	if (image->addr == 0)
 		exit_cub3d(data, IMG_ADDR);
-
 }
 
-void	check_color_digits(t_data *data, char **tmp, int i)
+static void	check_color_digits(t_data *data, char **tmp, int i)
 {
 	if (ft_strcspn(tmp[i], BASE_DEC))
 	{
@@ -44,9 +41,9 @@ void	check_color_digits(t_data *data, char **tmp, int i)
 	}
 }
 
-void	check_color_range(t_data *data, char **tmp, int i)
+static void	check_color_range(t_data *data, char **tmp, int i)
 {
-	int color;
+	int	color;
 
 	color = ft_atoi(tmp[i]);
 	if (color < 0 || color > 255)
@@ -56,7 +53,7 @@ void	check_color_range(t_data *data, char **tmp, int i)
 	}
 }
 
-void	get_color(t_data *data, t_color *color, char *line)
+static void	get_color(t_data *data, t_color *color, char *line)
 {
 	char	**tmp;
 	int		i;
@@ -80,18 +77,17 @@ void	get_color(t_data *data, t_color *color, char *line)
 	color->r = (unsigned char)ft_atoi(tmp[0]);
 	color->g = (unsigned char)ft_atoi(tmp[1]);
 	color->b = (unsigned char)ft_atoi(tmp[2]);
+	color->color = (color->r << 16 | color->g << 8 | color->b);
 	color->parsed = 1;
 	free_2d_array(tmp);
 }
 
 void	get_game_data(t_data *data, char *line)
 {
-	// color
 	if (*line == 'F')
 		get_color(data, &data->colors.floor, line + 1);
 	else if (*line == 'C')
 		get_color(data, &data->colors.ceiling, line + 1);
-	// xpm
 	else if (*line == 'N' && line[1] == 'O')
 		get_texture(data, &data->images.north, line + 2);
 	else if (*line == 'W' && line[1] == 'E')

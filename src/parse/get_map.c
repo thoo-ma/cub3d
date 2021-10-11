@@ -6,13 +6,12 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:45:02 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/23 12:23:21 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/11 19:23:12 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//		rename into `append_line` (add '\n')
 void	try_ft_strncat(t_data *data, char **dst, char *src, int n)
 {
 	if (ft_strncat(dst, src, n) == -1)
@@ -60,5 +59,4 @@ void	get_map(t_data *data, int fd, char **line)
 	safe_free((void *)line);
 	if (!data->map)
 		exit_cub3d(data, MAP_FT_SPLIT);
-//	print_2d_array(data->map);
 }

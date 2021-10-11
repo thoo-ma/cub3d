@@ -6,13 +6,13 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:47:53 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/23 13:57:42 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/11 19:05:15 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	check_file_extension(t_data *data, char *filename)
+static void	check_file_extension(t_data *data, char *filename)
 {
 	size_t	len;
 
@@ -24,7 +24,7 @@ void	check_file_extension(t_data *data, char *filename)
 	}
 }
 
-int	open_map(t_data *data, char *filename)
+static int	open_map(t_data *data, char *filename)
 {
 	int	fd;
 
@@ -42,16 +42,15 @@ int	open_map(t_data *data, char *filename)
 	return (fd);
 }
 
-void	check_game_data(t_data *data)
+static void	check_game_data(t_data *data)
 {
 	if (!data->images.est.img
-	|| !data->images.west.img
-	|| !data->images.north.img
-	|| !data->images.south.img)
+		|| !data->images.west.img
+		|| !data->images.north.img
+		|| !data->images.south.img)
 		exit_cub3d(data, TEXTURE_MISSING);
-
 	if (!data->colors.floor.parsed
-	|| !data->colors.ceiling.parsed)
+		|| !data->colors.ceiling.parsed)
 		exit_cub3d(data, COLOR_MISSING);
 }
 
@@ -80,4 +79,5 @@ void	parse(t_data *data, char *filename)
 	check_game_data(data);
 	check_map(data);
 	get_mlx_window(data);
+	get_mlx_image(data);
 }

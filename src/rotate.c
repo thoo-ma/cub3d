@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pixel_to_image.c                                   :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/31 11:01:10 by trobin            #+#    #+#             */
-/*   Updated: 2021/03/31 11:01:26 by trobin           ###   ########.fr       */
+/*   Created: 2021/05/09 09:18:57 by trobin            #+#    #+#             */
+/*   Updated: 2021/10/11 18:30:14 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	pixel_to_image(t_img *img, int y, int x, int color)
+double	rotate(double ray, double angle)
 {
-	char *pixel;
+	double	ret;
 
-	pixel = img->addr + (y * img->ll + x * (img->bpp / 8));
-	*(int *)pixel = color;
+	ret = ray + angle;
+	while (ret >= 2 * M_PI)
+		ret -= 2 * M_PI;
+	while (ret < 0)
+		ret += 2 * M_PI;
+	return (ret);
+}
+
+void	rotate_player(t_player *player, double angle)
+{
+	player->dir = rotate(player->dir, angle);
 }

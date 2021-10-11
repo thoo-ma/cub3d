@@ -6,7 +6,7 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 16:11:50 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/21 16:38:06 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/09 16:04:10 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	ft_allocate_words(char **dest, char *s, char c, int words)
 		while (s[j + k] && s[j + k] != c)
 			++k;
 		dest[i] = 0;
-		if (!(dest[i] = malloc(sizeof(char) * (k + 1))))
+		dest[i] = malloc(sizeof(char) * (k + 1));
+		if (!(dest[i]))
 			return (0);
 		ft_strcpy(dest[i], s + j, k + 1);
 		j += k;
@@ -71,7 +72,7 @@ static void	ft_free(char **to_free)
 	free(to_free);
 }
 
-char		**ft_split(char *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**dest;
 	int		words;
@@ -80,7 +81,8 @@ char		**ft_split(char *s, char c)
 		return (0);
 	words = ft_get_words(s, c);
 	dest = 0;
-	if (!(dest = malloc(sizeof(char *) * (words + 1))))
+	dest = malloc(sizeof(char *) * (words + 1));
+	if (!dest)
 		return (0);
 	if (!(ft_allocate_words(dest, s, c, words)))
 	{

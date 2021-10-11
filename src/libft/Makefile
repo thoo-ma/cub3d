@@ -1,6 +1,6 @@
-NAME		=	libft.a
+NAME	=	libft.a
 
-SRCS		=	ft_atoi.c	\
+SRCS	=	ft_atoi.c	\
 			ft_split.c	\
 			ft_bzero.c	\
 			ft_memcpy.c	\
@@ -16,22 +16,23 @@ SRCS		=	ft_atoi.c	\
 			ft_strpbrk.c	\
 			ft_isdigit.c	\
 			elem_index.c	\
+			elems_index.c	\
 			ft_strptrlen.c
 
-OBJS		=	$(addsuffix .o, $(basename $(SRCS)))
+OBJS	=	$(addsuffix .o, $(basename $(SRCS)))
 
 CC		=	gcc
 
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS	=	-Wall -Wextra -Werror
 
-ARCHIVE		=	ar -rcs $(NAME)
+ARCHIVE	=	ar -rcs $(NAME)
 
-all:			$(NAME)
+all:		$(NAME)
 
-%.o:			%.c
+%.o:		%.c
 			@$(CC) $(FLAGS) -c $< -o $@
 
-$(NAME):		$(OBJS)
+$(NAME):	$(OBJS)
 			@$(ARCHIVE) $^
 
 clean:

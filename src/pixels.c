@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_digits.c                                      :+:      :+:    :+:   */
+/*   pixels.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/22 11:20:13 by trobin            #+#    #+#             */
-/*   Updated: 2021/02/22 11:20:40 by trobin           ###   ########.fr       */
+/*   Created: 2021/03/31 11:01:10 by trobin            #+#    #+#             */
+/*   Updated: 2021/10/11 18:47:47 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	skip_digits(char **s)
+void	pixel_to_image(t_image *image, int x, int y, int color)
 {
-	while (ft_isdigit(**s))
-		(*s)++;
+	image->addr[y * WIN_SIZE + x] = color;
+}
+
+int	get_image_pixel_color(t_image *image, int col, int row)
+{
+	return ((int)image->addr[row * CUB_SIZE + col]);
 }

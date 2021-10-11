@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_wall.c                                          :+:      :+:    :+:   */
+/*   elems_index.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/10 06:21:40 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/21 16:52:22 by trobin           ###   ########.fr       */
+/*   Created: 2021/10/09 17:26:34 by trobin            #+#    #+#             */
+/*   Updated: 2021/10/09 17:26:44 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	is_wall(char **map, int x, int y)
+int	elems_index(char *s1, char *s2)
 {
-	if (map[y][x] == '1')
-		return (1);
-	return (0);
+	int	i;
+	int	index;
+
+	if (s1 && s2)
+	{
+		i = 0;
+		while (s1[i])
+		{
+			index = elem_index(s2, s1[i]);
+			if (index > -1)
+				return (elem_index(s1, s2[index]));
+			i++;
+		}
+	}
+	return (-1);
 }

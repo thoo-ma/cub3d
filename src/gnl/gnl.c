@@ -6,7 +6,7 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 13:41:51 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/23 12:14:45 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/09 16:04:48 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	temp_to_line(char **line, char *temp, char *buffer, int lf)
 	else
 	{
 		ft_bzero(buffer, BUFFER_SIZE);
-		if (**line) //modif
-			return (1); //modif
+		if (**line)
+			return (1);
 		return (0);
 	}
 }

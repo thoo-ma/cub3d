@@ -6,7 +6,7 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 10:33:23 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/22 16:12:14 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/09 16:02:09 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*ft_strdup(const char *s)
 	char	*dest;
 	int		len;
 
-	if (s == 0) // modif
-		return (0); // modif
+	if (s == 0)
+		return (0);
 	len = ft_strlen(s);
 	dest = 0;
 	dest = malloc(sizeof(char) * (len + 1));
