@@ -6,7 +6,7 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 11:01:10 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/11 18:59:40 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:10:18 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ static void	get_wall_column(t_data *data)
 	texture = data->wall.texture;
 	pos = data->player.pos;
 	if (texture == &data->images.est && angle < 0.5 * M_PI)
-		col = pos.y + sin(angle) * data->wall.dist;
+		col = pos.y + sin(angle) * data->ray.dist.x;
 	else if (texture == &data->images.est && angle > 1.5 * M_PI)
-		col = pos.y - sin(2 * M_PI - angle) * data->wall.dist;
+		col = pos.y - sin(2 * M_PI - angle) * data->ray.dist.x;
 	else if (texture == &data->images.west && angle < M_PI)
-		col = pos.y + sin(M_PI - angle) * data->wall.dist;
+		col = pos.y + sin(M_PI - angle) * data->ray.dist.x;
 	else if (texture == &data->images.west && angle > M_PI)
-		col = pos.y - sin(angle - M_PI) * data->wall.dist;
+		col = pos.y - sin(angle - M_PI) * data->ray.dist.x;
 	else if (texture == &data->images.north && angle < M_PI * 1.5)
-		col = pos.x - sin(M_PI * 1.5 - angle) * data->wall.dist;
+		col = pos.x - sin(M_PI * 1.5 - angle) * data->ray.dist.y;
 	else if (texture == &data->images.north && angle > M_PI * 1.5)
-		col = pos.x + sin(angle - 1.5 * M_PI) * data->wall.dist;
+		col = pos.x + sin(angle - 1.5 * M_PI) * data->ray.dist.y;
 	else if (texture == &data->images.south && angle < M_PI * 0.5)
-		col = pos.x + sin(0.5 * M_PI - angle) * data->wall.dist;
+		col = pos.x + sin(0.5 * M_PI - angle) * data->ray.dist.y;
 	else
-		col = pos.x - sin(angle - 0.5 * M_PI) * data->wall.dist;
+		col = pos.x - sin(angle - 0.5 * M_PI) * data->ray.dist.y;
 	data->wall.column = (int)(col) % CUB_SIZE;
 }
 
