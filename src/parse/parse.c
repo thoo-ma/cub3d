@@ -6,7 +6,7 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:47:53 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/11 19:05:15 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 13:44:53 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ void	parse(t_data *data, char *filename)
 	check_map(data);
 	get_mlx_window(data);
 	get_mlx_image(data);
+	raycasting(data);
 }

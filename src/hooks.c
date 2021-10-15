@@ -6,16 +6,19 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 11:34:27 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/11 18:42:30 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 13:52:59 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	do_nothing(void *param)
+static	int	render(void *data)
 {
-	(void)param;
-	return (1);
+	t_data	*d;
+
+	d = (t_data *)data;
+	mlx_put_image_to_window(d->mlx, d->win, d->images.cub3d.img, 0, 0);
+	return (0);
 }
 
 static int	key_hook(int key, t_data *data)
@@ -37,7 +40,6 @@ static int	key_hook(int key, t_data *data)
 	else
 		return (1);
 	raycasting(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->images.cub3d.img, 0, 0);
 	return (0);
 }
 
@@ -54,6 +56,6 @@ void	define_hooks(t_data *data)
 {
 	mlx_hook(data->win, KeyPress, KeyPressMask, &key_hook, data);
 	mlx_hook(data->win, ClientMessage, GCClipXOrigin, &mlx_loop_end, data->mlx);
-	mlx_loop_hook(data->mlx, &do_nothing, (void *)0);
+	mlx_loop_hook(data->mlx, &render, (void *)data);
 	mlx_loop(data->mlx);
 }
