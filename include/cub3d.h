@@ -6,7 +6,7 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 15:19:02 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/15 15:42:39 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:58:07 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef enum e_errno
 	XPM_FORMAT,
 	XPM_DUPLICATE,
 	XPM_UNAVAILABLE,
-	TEXTURE_MISSING,
+	XPM_MISSING,
 	COLOR_FORMAT,
 	COLOR_MALLOC,
 	COLOR_RANGE,

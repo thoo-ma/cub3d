@@ -6,7 +6,7 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 06:57:57 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/15 15:56:38 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:58:25 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	init_my_strerror_part_two(const char **my_strerror)
 	my_strerror[XPM_SIZE] = "cub3d only accept 64 pixels large xpms";
 	my_strerror[XPM_DUPLICATE] = "xpm duplicate";
 	my_strerror[XPM_UNAVAILABLE] = "unable to open xpm file";
-	my_strerror[TEXTURE_MISSING] = "texture missing";
+	my_strerror[XPM_MISSING] = "xpm missing";
 	my_strerror[COLOR_FORMAT] = "color format incorrect";
 	my_strerror[COLOR_MALLOC] = "get_color() : malloc() failed";
 	my_strerror[COLOR_RANGE] = "color outside of range [0;255]";
