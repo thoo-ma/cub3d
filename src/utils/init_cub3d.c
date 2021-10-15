@@ -6,7 +6,7 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 06:57:57 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/11 19:05:09 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:56:38 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	init_my_strerror_part_two(const char **my_strerror)
 	my_strerror[MLX_WINDOW] = "mlx_new_window() failed";
 	my_strerror[MLX_NEW_IMAGE] = "mlx_new_image() failed";
 	my_strerror[XPM_FORMAT] = "texture line not well formatted";
+	my_strerror[XPM_SIZE] = "cub3d only accept 64 pixels large xpms";
 	my_strerror[XPM_DUPLICATE] = "xpm duplicate";
 	my_strerror[XPM_UNAVAILABLE] = "unable to open xpm file";
 	my_strerror[TEXTURE_MISSING] = "texture missing";

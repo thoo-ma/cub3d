@@ -6,7 +6,7 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:47:53 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/15 13:44:53 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:43:36 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ static void	check_game_data(t_data *data)
 		|| !data->images.north.img
 		|| !data->images.south.img)
 		exit_cub3d(data, TEXTURE_MISSING);
+	if (data->images.est.ll != 256
+		|| data->images.west.ll != 256
+		|| data->images.north.ll != 256
+		|| data->images.south.ll != 256)
+		exit_cub3d(data, XPM_SIZE);
 	if (!data->colors.floor.parsed
 		|| !data->colors.ceiling.parsed)
 		exit_cub3d(data, COLOR_MISSING);

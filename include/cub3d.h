@@ -6,7 +6,7 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 15:19:02 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/11 19:15:36 by trobin           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:42:39 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef enum e_errno
 	MLX_INIT,
 	MLX_WINDOW,
 	MLX_NEW_IMAGE,
+	XPM_SIZE,
 	XPM_FORMAT,
 	XPM_DUPLICATE,
 	XPM_UNAVAILABLE,
