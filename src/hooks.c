@@ -6,18 +6,15 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 11:34:27 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/15 13:52:59 by trobin           ###   ########.fr       */
+/*   Updated: 2021/12/22 17:25:27 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static	int	render(void *data)
+static	int	render(t_data *data)
 {
-	t_data	*d;
-
-	d = (t_data *)data;
-	mlx_put_image_to_window(d->mlx, d->win, d->images.cub3d.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->images.cub3d.img, 0, 0);
 	return (0);
 }
 
