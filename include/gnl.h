@@ -6,7 +6,7 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 10:57:41 by trobin            #+#    #+#             */
-/*   Updated: 2021/09/07 10:44:10 by trobin           ###   ########.fr       */
+/*   Updated: 2022/01/03 19:38:10 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include "libft.h"
 
-# define BUFFER_SIZE	8
+# define BUFFER_SIZE	64
 
 int	ft_strncat(char **dest, char *src, int n);
 int	temp_to_line(char **line, char *temp, char *buffer, int lf);
