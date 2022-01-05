@@ -1,7 +1,7 @@
-NO ./assets/eagle.xpm
-SO ./assets/wood.xpm
-WE ./assets/redbrick.xpm
-EA ./assets/tree.xpm
+NO assets/textures/eagle.xpm
+SO assets/textures/wood.xpm
+WE assets/textures/redbrick.xpm
+EA assets/textures/tree.xpm
 F 109,109,109
 C 23,236,255
 
