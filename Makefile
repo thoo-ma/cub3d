@@ -66,7 +66,7 @@ $(NAME):		$(LIBFT) $(HEADERS) $(OBJECTS)
 				-Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 $(OBJECTS):		$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
-				$(CC) $(INCLUDE) -c $< -o $@
+				$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
 $(LIBFT):
 				$(MAKE) --no-print-directory -C $(LIBFT_DIR)
