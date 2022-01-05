@@ -80,7 +80,7 @@ fclean:			clean
 				rm -f $(NAME)
 
 norminette:
-				@norminette include src
+				@norminette include src libft
 
 re:				fclean all
 
