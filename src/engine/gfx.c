@@ -6,7 +6,7 @@
 /*   By: trobin <trobin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 11:01:10 by trobin            #+#    #+#             */
-/*   Updated: 2022/01/03 18:37:52 by trobin           ###   ########.fr       */
+/*   Updated: 2022/01/05 17:36:34 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	get_wall_column(t_data *data)
 	t_image			*texture;
 
 	angle = data->ray.angle;
-
 	texture = data->wall.texture;
 	pos = data->player.pos;
 	if (texture == &data->images.est && angle < 0.5 * M_PI)
