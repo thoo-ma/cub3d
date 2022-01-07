@@ -6,7 +6,7 @@
 /*   By: trobin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 15:28:04 by trobin            #+#    #+#             */
-/*   Updated: 2021/10/11 18:39:40 by trobin           ###   ########.fr       */
+/*   Updated: 2022/01/07 18:47:22 by trobin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	check_cardinal(t_data *data, char **map)
 		if (x > -1)
 		{
 			get_player_data(&data->player, x, y, map[y][x]);
-			if (elems_index(map[y] + x + 2, "NSEW") > -1)
+			if (elems_index(map[y] + x + 1, "NSEW") > -1)
 				exit_cub3d(data, MAP_MULT_CARDINALS);
 			while (map[++y])
 			{
