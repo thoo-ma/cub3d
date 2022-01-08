@@ -1,4 +1,4 @@
 *.cub	text
 *.xpm	text
-*.1		text
-*.3		text
+minilibx-linux/man/man1/* linguist-vendored=true
+minilibx-linux/man/man3/* linguist-vendored=true
