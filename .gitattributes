@@ -1,4 +1,3 @@
-*.cub	text
-*.xpm	text
 minilibx-linux/man/man1/* linguist-vendored=true
 minilibx-linux/man/man3/* linguist-vendored=true
+minilibx-linux/rgb2c.pl linguist-vendored=true
