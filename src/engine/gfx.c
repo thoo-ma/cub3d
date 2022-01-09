@@ -46,10 +46,8 @@ static void	get_wall_dist(t_data *data)
 	double	fisheye_corrector;
 
 	fisheye_corrector = cos(data->player.dir - data->ray.angle);
-	if (data->ray.dist.x < data->ray.dist.y)
-		data->wall.dist = data->ray.dist.x * fisheye_corrector;
-	else
-		data->wall.dist = data->ray.dist.y * fisheye_corrector;
+	data->wall.dist = fmin(data->ray.dist.x, data->ray.dist.y)
+		* fisheye_corrector;
 }
 
 static void	get_wall_texture(t_data *data)

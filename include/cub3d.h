@@ -24,6 +24,7 @@
 # include "gnl.h"
 # include "libft.h"
 # include "X11/X.h"
+# include <X11/X.h>
 
 /******************************************************************************/
 /*						                                                      */
@@ -49,7 +50,7 @@
 # define WIN_SIZE 1024
 # define FOV 66.0
 # define ROTATION_UNIT 10
-# define MOVEMENT_UNIT 16
+# define MOVEMENT_UNIT 20
 # define BASE_DEC "0123456789"
 
 /******************************************************************************/
@@ -316,10 +317,7 @@ int				get_image_pixel_color(t_image *image, int x, int y);
 /*                                                                            */
 /******************************************************************************/
 
-void			left(t_data *data);
-void			right(t_data *data);
-void			forward(t_data *data);
-void			backward(t_data *data);
+void			move(t_data *data, double dir);
 
 /******************************************************************************/
 /*                                                                            */
@@ -335,6 +333,7 @@ void			define_hooks(t_data *data);
 /*                                                                            */
 /******************************************************************************/
 
+void			dda(t_data *data);
 void			raycasting(t_data *data);
 t_int_vector	get_step(double ray);
 

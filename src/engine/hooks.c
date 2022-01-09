@@ -23,13 +23,13 @@ static int	key_hook(int key, t_data *data)
 	if (key == ESC)
 		mlx_loop_end(data->mlx);
 	if (key == W)
-		forward(data);
+		move(data, data->player.dir);
 	else if (key == S)
-		backward(data);
+		move(data, rotate(data->player.dir, M_PI));
 	else if (key == A)
-		left(data);
+		move(data, rotate(data->player.dir, M_PI / 2 * (-1)));
 	else if (key == D)
-		right(data);
+		move(data, rotate(data->player.dir, M_PI / 2));
 	else if (key == RIGHT)
 		rotate_player(&data->player, data->player.rot);
 	else if (key == LEFT)

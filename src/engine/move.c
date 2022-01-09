@@ -39,69 +39,26 @@ static t_double_vector	get_delta_move(double dir, double movement_unit)
 	return (delta);
 }
 
-void	forward(t_data *data)
+static inline double	get_move_dist(t_double_vector delta)
 {
-	t_double_vector	delta;
-	t_int_vector	step;
-
-	delta = get_delta_move(data->player.dir, data->player.mov);
-	step = get_step(data->player.dir);
-	if (data->map[(int)((data->player.pos.y + delta.y * step.y) / CUB_SIZE)]
-		[(int)((data->player.pos.x + delta.x * step.x) / CUB_SIZE)] != '1')
-	{
-		data->player.pos.x += delta.x * step.x;
-		data->player.pos.y += delta.y * step.y;
-		data->player.map.x = (int)(data->player.pos.x / CUB_SIZE);
-		data->player.map.y = (int)(data->player.pos.y / CUB_SIZE);
-	}
+	return (sqrt(pow(delta.x, 2) + pow(delta.y, 2)));
 }
 
-void	backward(t_data *data)
+void	move(t_data *data, double dir)
 {
-	t_double_vector	delta;
+	double			dist;
+	double			wall;
 	t_int_vector	step;
-
-	delta = get_delta_move(data->player.dir, data->player.mov);
-	step = get_step(data->player.dir);
-	if (data->map[(int)((data->player.pos.y - delta.y * step.y) / CUB_SIZE)]
-		[(int)((data->player.pos.x - delta.x * step.x) / CUB_SIZE)] != '1')
-	{
-		data->player.pos.x -= delta.x * step.x;
-		data->player.pos.y -= delta.y * step.y;
-		data->player.map.x = (int)(data->player.pos.x / CUB_SIZE);
-		data->player.map.y = (int)(data->player.pos.y / CUB_SIZE);
-	}
-}
-
-void	left(t_data *data)
-{
 	t_double_vector	delta;
-	t_int_vector	step;
-	double			dir;
 
-	dir = rotate(data->player.dir, 0.5 * M_PI * (-1.0));
-	delta = get_delta_move(dir, data->player.mov);
 	step = get_step(dir);
-	if (data->map[(int)((data->player.pos.y + delta.y * step.y) / CUB_SIZE)]
-		[(int)((data->player.pos.x + delta.x * step.x) / CUB_SIZE)] != '1')
-	{
-		data->player.pos.x += delta.x * step.x;
-		data->player.pos.y += delta.y * step.y;
-		data->player.map.x = (int)(data->player.pos.x / CUB_SIZE);
-		data->player.map.y = (int)(data->player.pos.y / CUB_SIZE);
-	}
-}
-
-void	right(t_data *data)
-{
-	t_double_vector	delta;
-	t_int_vector	step;
-	double			dir;
-
-	dir = rotate(data->player.dir, 0.5 * M_PI);
 	delta = get_delta_move(dir, data->player.mov);
-	step = get_step(dir);
-	if (data->map[(int)((data->player.pos.y + delta.y * step.y) / CUB_SIZE)]
+	dist = get_move_dist(delta);
+	data->ray.angle = dir;
+	dda(data);
+	wall = fmin(data->ray.dist.x, data->ray.dist.y);
+	if (dist < wall
+		&& data->map[(int)((data->player.pos.y + delta.y * step.y) / CUB_SIZE)]
 		[(int)((data->player.pos.x + delta.x * step.x) / CUB_SIZE)] != '1')
 	{
 		data->player.pos.x += delta.x * step.x;

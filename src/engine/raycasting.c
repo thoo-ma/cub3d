@@ -94,7 +94,7 @@ static t_double_vector	init_ray_dist(t_int_vector map, t_double_vector pos,
 	return (dist);
 }
 
-static void	dda(t_data *data)
+void	dda(t_data *data)
 {
 	data->ray.map = data->player.map;
 	data->ray.step = get_step(data->ray.angle);
@@ -120,7 +120,6 @@ static void	dda(t_data *data)
 			data->ray.dist.y += data->ray.delta.y;
 		}
 	}
-	textured_column_to_image(data);
 }
 
 void	raycasting(t_data *data)
@@ -131,6 +130,7 @@ void	raycasting(t_data *data)
 	while (data->ray.column < WIN_SIZE)
 	{
 		dda(data);
+		textured_column_to_image(data);
 		data->ray.angle = rotate(data->ray.angle, data->ray.rot);
 		data->ray.column++;
 	}
