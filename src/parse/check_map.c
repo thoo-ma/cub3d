@@ -69,7 +69,7 @@ static void	check_map_closed(t_data *data, char **map)
 			exit_cub3d(data, MAP_NOT_CLOSE);
 		while (--j)
 		{
-			if (map[i][j] == ' ')
+			if (map[i][j] == '0')
 				check_space(data, map, i, j);
 		}
 	}
