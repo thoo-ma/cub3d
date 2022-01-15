@@ -30,8 +30,11 @@ static void	destroy_cub3d(t_data *data)
 			mlx_destroy_image(data->mlx, data->images.cub3d.img);
 		if (data->win)
 			mlx_destroy_window(data->mlx, data->win);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
+		if (data->mlx)
+		{
+			mlx_destroy_display(data->mlx);
+			free(data->mlx);
+		}
 	}
 }
 
